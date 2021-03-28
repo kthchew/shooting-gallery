@@ -16,7 +16,14 @@ class GameScene: SKScene {
         }
     }
     var scoreCounter: SKLabelNode?
-    var timer: Timer?
+    var targetSpawnTimer: Timer?
+    var secondsRemaining = 60 {
+        didSet {
+            timeCountdownLabel?.text = "\(secondsRemaining)"
+        }
+    }
+    var timeCountdownLabel: SKLabelNode?
+    var timeCountdownTimer: Timer?
 
     override func didMove(to view: SKView) {
         backgroundColor = .white
@@ -37,7 +44,19 @@ class GameScene: SKScene {
         scoreCounter?.position = CGPoint(x: 100, y: 50)
         addChild(scoreCounter!)
 
-        timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: createTarget)
+        timeCountdownLabel = SKLabelNode(text: "60")
+        timeCountdownLabel?.fontName = "Chalkduster"
+        timeCountdownLabel?.fontColor = .black
+        timeCountdownLabel?.position = CGPoint(x: 924, y: 50)
+        addChild(timeCountdownLabel!)
+        timeCountdownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+            self?.secondsRemaining -= 1
+            if self?.secondsRemaining ?? -1 <= 0 {
+                self?.endGame()
+            }
+        }
+
+        targetSpawnTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: createTarget)
     }
 
     override func update(_ currentTime: TimeInterval) {
@@ -91,5 +110,24 @@ class GameScene: SKScene {
                 node.removeFromParent()
             }
         }
+    }
+
+    func endGame() {
+        for node in nodes(at: position) {
+            let isTarget = node.name == "goodTarget" || node.name == "badTarget"
+            if isTarget {
+                node.removeFromParent()
+            }
+        }
+
+        timeCountdownTimer?.invalidate()
+        targetSpawnTimer?.invalidate()
+
+        let gameOverLabel = SKLabelNode(text: "Game over!\nYou earned \(score) points.")
+        gameOverLabel.position = CGPoint(x: 512, y: 400)
+        gameOverLabel.numberOfLines = -1
+        gameOverLabel.fontName = "Kefa"
+        gameOverLabel.fontColor = .black
+        addChild(gameOverLabel)
     }
 }
