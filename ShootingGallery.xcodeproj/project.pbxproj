@@ -24,8 +24,10 @@
 		CED5DB3F0C97B28CD6D0416D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CED5DCA4A9797E6CC665C703 /* ShootingGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShootingGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED5DCBE6D953EC744CB710F /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		CED5DE0057B9B654270F0CB8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CED5DE0AE6837964B29C59A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CED5DE7703CE820E20B97E14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		CED5DE77A22253CE5793E143 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,8 @@
 			children = (
 				CED5D443A1CF9E3795A906BE /* Products */,
 				CED5D2DAD41CC4821BF455D6 /* ShootingGallery */,
+				CED5DE77A22253CE5793E143 /* README.md */,
+				CED5DE0057B9B654270F0CB8 /* LICENSE */,
 			);
 			sourceTree = "<group>";
 		};
