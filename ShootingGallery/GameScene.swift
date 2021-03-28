@@ -10,6 +10,12 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    var score = 0 {
+        didSet {
+            scoreCounter?.text = "Score: \(score)"
+        }
+    }
+    var scoreCounter: SKLabelNode?
     var timer: Timer?
 
     override func didMove(to view: SKView) {
@@ -25,14 +31,25 @@ class GameScene: SKScene {
 
         physicsWorld.gravity = .zero
 
+        scoreCounter = SKLabelNode(text: "Score: 0")
+        scoreCounter?.fontName = "Chalkduster"
+        scoreCounter?.fontColor = .black
+        scoreCounter?.position = CGPoint(x: 100, y: 50)
+        addChild(scoreCounter!)
+
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: createTarget)
     }
 
     override func update(_ currentTime: TimeInterval) {
         for node in children {
-            if (node.name == "goodTarget" || node.name == "badTarget") && (node.position.x < -200 || node.position.x >
-                       1300)  {
+            let isTarget = node.name == "goodTarget" || node.name == "badTarget"
+            let isOutOfBounds = node.position.x < -200 || node.position.x > 1300
+            if isTarget && isOutOfBounds {
                 node.removeFromParent()
+
+                if node.name == "goodTarget" {
+                    score -= 1
+                }
             }
         }
     }
@@ -59,5 +76,20 @@ class GameScene: SKScene {
         target.physicsBody?.linearDamping = 0
 
         addChild(target)
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let position = touch.location(in: self)
+
+        for node in nodes(at: position) {
+            if node.name == "goodTarget" {
+                score += 1
+                node.removeFromParent()
+            } else if node.name == "badTarget" {
+                score -= 1
+                node.removeFromParent()
+            }
+        }
     }
 }
